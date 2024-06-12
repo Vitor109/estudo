@@ -1,0 +1,2 @@
+Could not open dictionary.
+Could not load path/to/your/dictionary.

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <style>
+        .correct {
+            background-color: green;
+        }
+
+        .incorrect {
+            background-color: red;
+        }
+
+        .button:disabled {
+            pointer-events: none;
+        }
+
+        #part_2 {
+            color: black; /* Cor padrão */
+        }
+    </style>
+    <title>Trivia!</title>
+    <script>
+        var answeredPart2 = false;
+
+        function answerHTML(correct, element) {
+            var answerElement = document.getElementById(element);
+            if (correct) {
+                answerElement.innerHTML = "Correto";
+                answerElement.classList.remove('incorrect');
+                answerElement.classList.add('correct');
+            } else {
+                answerElement.innerHTML = "Incorreto";
+                answerElement.classList.remove('correct');
+                answerElement.classList.add('incorrect');
+            }
+        }
+
+        function resetButtonsState() {
+            var buttons = document.querySelectorAll(".button");
+            buttons.forEach(function (button) {
+                button.classList.remove('incorrect');
+                button.classList.remove('correct');
+                button.disabled = false; // Habilitar todos os botões novamente
+            });
+        }
+
+        function getAnswerButton() {
+            resetButtonsState();
+            if (event.target.textContent === "Brasil") {
+                event.target.classList.add('correct');
+                answerHTML(true, "part_1");
+                disableAllButtonsExcept(event.target);
+            } else {
+                event.target.classList.add('incorrect');
+                answerHTML(false, "part_1");
+                disableAllButtonsExcept(null);
+            }
+        }
+
+        function disableAllButtonsExcept(selectedButton) {
+            var buttons = document.querySelectorAll(".button");
+            buttons.forEach(function (button) {
+                if (button !== selectedButton) {
+                    button.disabled = true;
+                }
+            });
+        }
+
+        function checkAnswer() {
+            if (!answeredPart2) {
+                var userInput = document.querySelector('input').value.toLowerCase();
+                if (userInput === "brasil") {
+                    answerHTML(true, "part_2");
+                } else {
+                    answerHTML(false, "part_2");
+                }
+                answeredPart2 = true;
+                document.querySelector('input').disabled = true;
+                document.getElementById('check').disabled = true;
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="jumbotron">
+        <h1>Trivia!</h1>
+    </div>
+    <div class="container">
+        <div class="section">
+            <h2>Part 1: Multipla Escolha </h2>
+            <hr>
+            <h3>Qual é o quinto maior país do mundo?</h3>
+            <h2 id="part_1"></h2>
+            <button class="button" onclick="getAnswerButton()">Estados Unidos</button>
+            <button class="button" onclick="getAnswerButton()">China</button>
+            <button class="button" onclick="getAnswerButton()">Japão</button>
+            <button class="button" onclick="getAnswerButton()">Chile</button>
+            <button id="correct" class="button" onclick="getAnswerButton()">Brasil</button>
+        </div>
+        <div class="section">
+            <h2>Part 2: Resposta livre</h2>
+            <hr>
+            <h3>Qual o País com mais Copas do Mundo de Futebol?</h3>
+            <h2 id="part_2"></h2>
+            <input type="text">
+            <button id="check" class="input" onclick="checkAnswer()">Check Answer</button>
+        </div>
+    </div>
+</body>
+</html>

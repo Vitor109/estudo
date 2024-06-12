@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Birthday Tracker</h1>
+
+    <!-- Formulário para adicionar novo aniversário -->
+    <form action="/" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br>
+        <label for="month">Month:</label>
+        <input type="text" id="month" name="month" required><br>
+        <label for="day">Day:</label>
+        <input type="text" id="day" name="day" required><br>
+        <button type="submit">Add Birthday</button>
+    </form>
+
+    <!-- Tabela para exibir aniversários existentes -->
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Birthday</th>
+        </tr>
+        {% for birthday in birthdays %}
+        <tr>
+            <td>{{ birthday['name'] }}</td>
+            <td>{{ birthday['month'] }}/{{ birthday['day'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
+
